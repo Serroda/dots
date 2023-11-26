@@ -7,6 +7,15 @@ export default defineNuxtConfig({
     "assets/css/main.css"
   ],
   app: {
-    baseURL: "/dots/"
+    baseURL: "/dots/",
+    head: {
+      htmlAttrs: {
+        lang: 'en'
+      },
+      meta: [{
+        "name": "theme-color",
+        "content": "#0D0D0D"
+      }]
+    }
   }
 })

@@ -30,7 +30,7 @@
   --color-8: 0 0% var(--light-8);
   --color-9: 0 0% var(--light-9);
  
-  --seconds-for-grow: 0s;
+  --seconds-for-grow: .1s;
   --seconds-before-fade: 10s;
 
   font-family: ChakraPetch;
@@ -89,11 +89,20 @@ p {
     background: hsl(var(--color-8));
     transition: transform var(--seconds-before-fade), background var(--seconds-before-fade) ;
 }
-
-.dot-container:hover .dot{
+.dot-container.active .dot{
   transition: transform var(--seconds-for-grow), background var(--seconds-for-grow) ;
-  transform: scale(2);
+  transform: scale(1.6);
   background: hsl(var(--color-4));
+  box-shadow: 0 0 15px hsl(var(--color-4));
+}
+
+@media (hover) and (pointer: fine){
+  .dot-container:hover .dot{
+    transition: transform var(--seconds-for-grow), background var(--seconds-for-grow) ;
+    transform: scale(1.6);
+    background: hsl(var(--color-4));
+    box-shadow: 0 0 15px hsl(var(--color-4));
+  }
 }
 
 
