@@ -91,7 +91,7 @@ p {
 }
 .dot-container.active .dot{
   transition: transform var(--seconds-for-grow), background var(--seconds-for-grow) ;
-  transform: scale(1.6);
+  transform: scale(1.2);
   background: hsl(var(--color-4));
   box-shadow: 0 0 15px hsl(var(--color-4));
 }
@@ -99,7 +99,7 @@ p {
 @media (hover) and (pointer: fine){
   .dot-container:hover .dot{
     transition: transform var(--seconds-for-grow), background var(--seconds-for-grow) ;
-    transform: scale(1.6);
+    transform: scale(1.2);
     background: hsl(var(--color-4));
     box-shadow: 0 0 15px hsl(var(--color-4));
   }

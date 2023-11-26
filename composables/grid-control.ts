@@ -1,5 +1,6 @@
-export const useGridControl = (dotSize: number) => {
+export const useGridControl = () => {
 
+    const dotSize = ref(0)
     const columns = ref(0)
     const rows = ref(0)
     const dots = ref(0)
@@ -22,14 +23,23 @@ export const useGridControl = (dotSize: number) => {
         y.value = Math.round(eventTouch.touches[0].clientY / window.innerHeight * rows.value)
     }
 
-    onMounted(() => {
-        columns.value = Math.floor(window.innerWidth / dotSize)
-        rows.value = Math.floor(window.innerHeight / dotSize)
+    function init(){
+        const relationAspect = window.innerWidth / window.innerHeight ;
+
+        dotSize.value = Math.floor(window.innerWidth /  (25 * relationAspect))
+        columns.value = Math.floor(window.innerWidth / dotSize.value)
+        rows.value = Math.floor(window.innerHeight / dotSize.value)
         dots.value = Math.floor(rows.value * columns.value)
+    }
+
+    onMounted(() => {
+        init();
+        window.onresize = init;
     })
 
     return {
         dots,
+        dotSize,
         calculateIndex,
         resetCoord,
         setCoord
