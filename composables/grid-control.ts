@@ -55,6 +55,7 @@ export const useGridControl = () => {
     onMounted(() => {
         init();
         window.onresize = init;
+        screen.orientation.onchange = init
     })
 
     return {
