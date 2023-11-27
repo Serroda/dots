@@ -35,13 +35,13 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'en'
       },
-      meta: [{
-        "name": "theme-color",
-        "content": "#0D0D0D",
-      }],
       link: [{
         rel: "manifest",
         href: "/dots/manifest.webmanifest"
+      }, {
+        rel: "icon",
+        type: "image/x-icon",
+        href: "/dots/favicon.ico"
       }],
       viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     }
