@@ -14,6 +14,7 @@ export default defineNuxtConfig({
       short_name: 'Dots',
       description: 'Dots for play',
       theme_color: '#0D0D0D',
+      background_color: "#0D0D0D",
       icons: [
         {
           src: 'pwa-192x192.png',
