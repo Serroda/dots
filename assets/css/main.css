@@ -87,19 +87,17 @@ p {
     height: 20px;
     border-radius: 100%;
     background: hsl(var(--color-8));
-    transition: transform var(--seconds-before-fade), background var(--seconds-before-fade) ;
+    transition: background var(--seconds-before-fade) , box-shadow var(--seconds-before-fade);
 }
 .dot-container.active .dot{
-  transition: transform var(--seconds-for-grow), background var(--seconds-for-grow) ;
-  transform: scale(1.2);
+  transition: background var(--seconds-for-grow); 
   background: hsl(var(--color-4));
   box-shadow: 0 0 15px hsl(var(--color-4));
 }
 
 @media (hover) and (pointer: fine){
   .dot-container:hover .dot{
-    transition: transform var(--seconds-for-grow), background var(--seconds-for-grow) ;
-    transform: scale(1.2);
+    transition: background var(--seconds-for-grow) ;
     background: hsl(var(--color-4));
     box-shadow: 0 0 15px hsl(var(--color-4));
   }
