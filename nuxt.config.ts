@@ -43,6 +43,7 @@ export default defineNuxtConfig({
         type: "image/x-icon",
         href: "/dots/favicon.ico"
       }],
+      title:"Dots by Jesús",
       viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     }
   }
