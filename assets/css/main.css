@@ -30,7 +30,7 @@
   --color-8: 0 0% var(--light-8);
   --color-9: 0 0% var(--light-9);
  
-  --seconds-for-grow: .1s;
+  --seconds-for-grow: 0s;
   --seconds-before-fade: 10s;
 
   font-family: ChakraPetch;
