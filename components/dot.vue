@@ -1,15 +1,28 @@
 <template>
-    <div class="dot-container" :class="{ 'active': active }">
-        <div class="dot" :style="'width:' + (size - 12) + 'px; height:'+(size - 12)+ 'px'"></div>
-    </div>
+  <div class="dot-container" :style="gridGap" :class="{ active: active }">
+    <div class="dot" :style="dotSize"></div>
+  </div>
 </template>
 
 <script lang="ts" setup>
- withDefaults(defineProps<{
-    active?: boolean,
-    size: number
-}>(),{
-    active: false
-})
+const variableControl = useVariableControl();
+withDefaults(
+  defineProps<{
+    active?: boolean;
+  }>(),
+  {
+    active: false,
+  }
+);
 
+const dotSize = computed(
+  () =>
+    "width:" +
+    (variableControl.dotSize - variableControl.gridGap * 2) +
+    "px;height:" +
+    (variableControl.dotSize - variableControl.gridGap * 2) +
+    "px;"
+);
+
+const gridGap = computed(() => "padding:" + variableControl.gridGap + "px;");
 </script>

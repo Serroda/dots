@@ -29,7 +29,7 @@
   --color-7: 0 0% var(--light-7);
   --color-8: 0 0% var(--light-8);
   --color-9: 0 0% var(--light-9);
- 
+
   --seconds-for-grow: 0s;
   --seconds-before-fade: 10s;
 
@@ -79,28 +79,23 @@ p {
   font-family: SourceSansPro;
 }
 
-.dot-container{
-  padding: 6px;
+.dot {
+  border-radius: 100%;
+  background: hsl(var(--color-8));
+  transition: background var(--seconds-before-fade),
+    box-shadow var(--seconds-before-fade);
 }
-.dot{
-    width: 20px;
-    height: 20px;
-    border-radius: 100%;
-    background: hsl(var(--color-8));
-    transition: background var(--seconds-before-fade) , box-shadow var(--seconds-before-fade);
-}
-.dot-container.active .dot{
-  transition: background var(--seconds-for-grow); 
+
+.dot-container.active .dot {
+  transition: background var(--seconds-for-grow);
   background: hsl(var(--color-4));
   box-shadow: 0 0 15px hsl(var(--color-4));
 }
 
-@media (hover) and (pointer: fine){
-  .dot-container:hover .dot{
-    transition: background var(--seconds-for-grow) ;
+@media (hover) and (pointer: fine) {
+  .dot-container:hover .dot {
+    transition: background var(--seconds-for-grow);
     background: hsl(var(--color-4));
     box-shadow: 0 0 15px hsl(var(--color-4));
   }
 }
-
-

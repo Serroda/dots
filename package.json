@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@pinia/nuxt": "^0.5.1",
     "@unocss/nuxt": "^0.57.7",
     "@vite-pwa/nuxt": "^0.3.2",
     "nuxt": "^3.8.2",

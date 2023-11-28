@@ -6,7 +6,8 @@ interface TouchGrid {
 
 export const useGridControl = () => {
 
-    const dotSize = ref(0)
+    const variableControl = useVariableControl();
+
     const columns = ref(0)
     const rows = ref(0)
     const dots = ref(0)
@@ -37,31 +38,25 @@ export const useGridControl = () => {
         touches.value = []
     }
 
-    const calculateDotSize = (relationAspect: number, numberOfDotsInColumns: number) => Math.floor(window.innerWidth / (numberOfDotsInColumns * relationAspect))
-    const calculateColumns = () => Math.floor(window.innerWidth / dotSize.value)
-    const calculateRows = () => Math.floor(window.innerHeight / dotSize.value)
+    const calculateColumns = () => Math.floor(window.innerWidth / variableControl.dotSize)
+    const calculateRows = () => Math.floor(window.innerHeight / variableControl.dotSize)
     const calculateDotsNumber = () => Math.floor(rows.value * columns.value)
 
-    function init() {
-
-        const relationAspect = window.innerWidth / window.innerHeight;
-
-        dotSize.value = calculateDotSize(relationAspect, 25)
+    function calculateGrid() {
         columns.value = calculateColumns()
         rows.value = calculateRows()
         dots.value = calculateDotsNumber()
     }
 
     onMounted(() => {
-        init();
-        window.onresize = init;
-        screen.orientation.onchange = init
+        calculateGrid();
+        document.addEventListener('variablesUpdated', calculateGrid)
+        window.onresize = calculateGrid;
     })
 
     return {
         dots,
         touches,
-        dotSize,
         resetTouches,
         setTouches
     }

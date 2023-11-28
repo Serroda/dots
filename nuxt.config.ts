@@ -1,13 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@unocss/nuxt", "@vite-pwa/nuxt"],
+  modules: ["@unocss/nuxt", "@vite-pwa/nuxt", "@pinia/nuxt"],
   ssr: false,
   css: [
     "assets/css/main.css"
   ],
+  imports:{
+    dirs:['./variables']
+  },
   pwa: {
     registerType: "autoUpdate",
+    workbox:{
+      navigateFallback: null
+    },
     manifest: {
       lang: "es",
       name: 'Dots by Jesús',
