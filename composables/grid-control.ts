@@ -13,17 +13,18 @@ export const useGridControl = () => {
     const dots = ref(0)
     const touches: Ref<TouchGrid[]> = ref([])
 
-    const calculateCoordX = (clientX: number) => Math.round(clientX / window.innerWidth * columns.value)
-    const calculateCoordY = (clientY: number) => Math.round(clientY / window.innerHeight * rows.value)
+    const calculateCoordX = (clientX: number) => Math.floor(clientX / window.innerWidth * columns.value)
+    const calculateCoordY = (clientY: number) => Math.floor(clientY / window.innerHeight * rows.value)
     const getIndexItem = (x: number, y: number) => (x < 0 || y < 0) ? -1 : x + (y * columns.value)
 
     function setTouches(eventTouch: TouchEvent) {
         for (const touch of eventTouch.changedTouches) {
 
+
             const x = calculateCoordX(touch.clientX)
             const y = calculateCoordY(touch.clientY)
-            const indexItem = getIndexItem(x, y)
 
+            const indexItem = getIndexItem(x, y)
             const touchSaved = touches.value.find(item => item.id == touch.identifier);
 
             if (touchSaved) {
@@ -38,8 +39,8 @@ export const useGridControl = () => {
         touches.value = []
     }
 
-    const calculateColumns = () => Math.floor(window.innerWidth / variableControl.dotSize)
-    const calculateRows = () => Math.floor(window.innerHeight / variableControl.dotSize)
+    const calculateColumns = () => Math.floor(window.innerWidth / (variableControl.dotSize + variableControl.gridGap * 2))
+    const calculateRows = () => Math.floor(window.innerHeight / (variableControl.dotSize + variableControl.gridGap * 2))
     const calculateDotsNumber = () => Math.floor(rows.value * columns.value)
 
     function calculateGrid() {
@@ -50,7 +51,6 @@ export const useGridControl = () => {
 
     onMounted(() => {
         calculateGrid();
-        document.addEventListener('variablesUpdated', calculateGrid)
         window.onresize = calculateGrid;
     })
 
