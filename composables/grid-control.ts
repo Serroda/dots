@@ -8,18 +8,18 @@ export const useGridControl = () => {
 
     const variableControl = useVariableControl();
 
-    const columns = ref(0)
-    const rows = ref(0)
+    let columns = 0
+    let rows = 0
     const dots = ref(0)
     const touches: Ref<TouchGrid[]> = ref([])
+    const sizeDotPlusGap = (variableControl.dotSize + variableControl.gridGap * 2)
 
-    const calculateCoordX = (clientX: number) => Math.floor(clientX / window.innerWidth * columns.value)
-    const calculateCoordY = (clientY: number) => Math.floor(clientY / window.innerHeight * rows.value)
-    const getIndexItem = (x: number, y: number) => (x < 0 || y < 0) ? -1 : x + (y * columns.value)
+    const calculateCoordX = (clientX: number) => Math.floor(clientX / sizeDotPlusGap)
+    const calculateCoordY = (clientY: number) => Math.floor(clientY / sizeDotPlusGap)
+    const getIndexItem = (x: number, y: number) => (x < 0 || y < 0) ? -1 : x + (y * columns)
 
     function setTouches(eventTouch: TouchEvent) {
         for (const touch of eventTouch.changedTouches) {
-
 
             const x = calculateCoordX(touch.clientX)
             const y = calculateCoordY(touch.clientY)
@@ -39,13 +39,13 @@ export const useGridControl = () => {
         touches.value = []
     }
 
-    const calculateColumns = () => Math.floor(window.innerWidth / (variableControl.dotSize + variableControl.gridGap * 2))
-    const calculateRows = () => Math.floor(window.innerHeight / (variableControl.dotSize + variableControl.gridGap * 2))
-    const calculateDotsNumber = () => Math.floor(rows.value * columns.value)
+    const calculateColumns = () => Math.floor(window.innerWidth / sizeDotPlusGap)
+    const calculateRows = () => Math.floor(window.innerHeight / sizeDotPlusGap)
+    const calculateDotsNumber = () => Math.floor(rows * columns)
 
     function calculateGrid() {
-        columns.value = calculateColumns()
-        rows.value = calculateRows()
+        columns = calculateColumns()
+        rows = calculateRows()
         dots.value = calculateDotsNumber()
     }
 

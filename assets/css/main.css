@@ -12,6 +12,7 @@
 
   --color-8: #333333;
   --color-4: #999999;
+  --color-2: #D9D9D9;
   
   --seconds-on-enter: 0s;
   --seconds-on-fade: 10s;
@@ -65,6 +66,11 @@ p {
   font-family: SourceSansPro;
 }
 
+label {
+  color: var(--color-2);
+  font-size: 1rem;
+}
+
 .dot-container{
   padding: var(--grid-gap);
 }
@@ -91,4 +97,10 @@ p {
     background: var(--color-4);
     box-shadow: 0 0 15px var(--color-4);
   }
+}
+
+.button-position{
+  position: absolute;
+  bottom: -5px;
+  left: calc( 50% - (123.844px / 2));
 }
