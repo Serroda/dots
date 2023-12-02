@@ -1,7 +1,7 @@
 
 export const useDefaultsVariables = () => {
 
-    enum VariablesNames {
+    enum Names {
         DOT_SIZE = '--dot-size',
         GRID_GAP = '--grid-gap',
         DOT_COLOR_ACTIVE = '--color-4',
@@ -12,18 +12,18 @@ export const useDefaultsVariables = () => {
         PAINT_ON_HOVER = 'paint-on-hover'
     }
 
-    interface DefaultValues {
-        [VariablesNames.DOT_SIZE]: number,
-        [VariablesNames.GRID_GAP]: number,
-        [VariablesNames.DOT_COLOR_ACTIVE]: string,
-        [VariablesNames.DOT_COLOR_INACTIVE]: string,
-        [VariablesNames.BACKGROUND_COLOR]: string,
-        [VariablesNames.SECONDS_ON_ENTER]: number,
-        [VariablesNames.SECONDS_ON_FADE]: number,
-        [VariablesNames.PAINT_ON_HOVER]: boolean,
+    interface IDefaultVariables {
+        [Names.DOT_SIZE]: number,
+        [Names.GRID_GAP]: number,
+        [Names.DOT_COLOR_ACTIVE]: string,
+        [Names.DOT_COLOR_INACTIVE]: string,
+        [Names.BACKGROUND_COLOR]: string,
+        [Names.SECONDS_ON_ENTER]: number,
+        [Names.SECONDS_ON_FADE]: number,
+        [Names.PAINT_ON_HOVER]: boolean,
     }
 
-    const defaultVariables: DefaultValues = {
+    const defaultVariables: IDefaultVariables = {
         '--dot-size': 50,
         '--grid-gap': 6,
         '--color-4': "#999999",
@@ -35,7 +35,7 @@ export const useDefaultsVariables = () => {
     }
 
     return {
-        VariablesNames,
+        Names,
         defaultVariables
     }
 }

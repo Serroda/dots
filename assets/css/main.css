@@ -96,7 +96,7 @@ label {
 }
 
 @media (hover) and (pointer: fine) {
-  .dot-container:hover .dot {
+  .dot-container.hover-animation:hover .dot {
     transition: background var(--seconds-on-enter);
     background: var(--color-4);
     box-shadow: 0 0 15px var(--color-4);

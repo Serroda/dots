@@ -10,6 +10,7 @@
         v-for="(_, index) in dots"
         :key="index"
         :active="idsActive.includes(index)"
+        :hoverAnimation="values[Names.PAINT_ON_HOVER]"
       />
     </div>
 
@@ -35,10 +36,10 @@
           <div class="mt-26px">
             <h3>GENERAL</h3>
             <CustomInput
+             class="cursor-pointer"
               text="Paint on hover"
               mode="checkbox"
-              :default-value="variableControl.variables.paintOnHover"
-              @value-changed="(value) => valueChanged('paintOnHover', value)"
+              :nameValue= "Names.PAINT_ON_HOVER"
             ></CustomInput>
           </div>
         </div>
@@ -48,15 +49,11 @@
 </template>
 
 <script lang="ts" setup>
-const variableControl = useVariableControl();
+
+const {values,Names} = useVariableControl()
 const { dots, touches, setTouches, resetTouches } = useGridControl();
 
 const idsActive = computed(() => touches.value.map((item) => item.index));
 const openMenu = ref(false);
 
-function valueChanged(name: keyof typeof variableControl.variables, value: boolean | string | number) {
-
-  /* variableControl.variables[name] = value as any;  */
-
-}
 </script>

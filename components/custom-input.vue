@@ -1,26 +1,34 @@
 <template>
     <div class="flex items-center gap-24px">
-        <div class="input-container" :class="{ 'checkbox-animation': value }" v-if="mode === 'checkbox'"
-            @click="value = !value">
+        <div v-if="mode === 'checkbox'" class="input-container" :class="{ 'checkbox-animation': value }"
+            @click="clickOnInput">
         </div>
         <label>{{ text }}
-            <input :type="mode" v-model="value" @change="emits('valueChanged',value)" class="hidden">
+            <input :type="mode" @input="clickOnInput" class="hidden">
         </label>
     </div>
 </template>
 
 <script lang="ts" setup>
+const { values, changeValue } = useVariableControl();
+
 const props = defineProps<{
     text: string,
     mode: 'checkbox' | 'radio' | 'number',
-    defaultValue: boolean | number | string
+    nameValue: keyof typeof values
 }>()
 
-const value = ref(props.defaultValue)
-const emits = defineEmits<{
-    (event: 'valueChanged', value : boolean | number | string) :void
-}>()
+const value = computed(() => values[props.nameValue])
 
+function clickOnInput() {
+    switch (props.mode) {
+        case 'checkbox':
+            changeValue(props.nameValue, !values[props.nameValue])
+            break;
+        default:
+            break;
+    }
+}
 </script>
 
 <style scoped>
@@ -29,7 +37,6 @@ const emits = defineEmits<{
     height: 60px;
     border: 1px solid #333333;
     transition: border .2s;
-    cursor: pointer;
     position: relative;
 }
 
@@ -48,17 +55,17 @@ const emits = defineEmits<{
     left: calc(50% - 48px /2);
 }
 
- .input-container::after {
+.input-container::after {
     transform: rotate(135deg);
 }
 
 .input-container::before {
     transform: rotate(45deg);
-} 
+}
 
 .checkbox-animation::after,
 .checkbox-animation::before {
-   background: #999999;
+    background: #999999;
 }
 </style>
 
