@@ -12,7 +12,7 @@ export const useGridControl = () => {
     let rows = 0
     const dots = ref(0)
     const touches: Ref<TouchGrid[]> = ref([])
-    const sizeDotPlusGap = (variableControl.dotSize + variableControl.gridGap * 2)
+    const sizeDotPlusGap = (variableControl.variables.dotSize + variableControl.variables.gridGap * 2)
 
     const calculateCoordX = (clientX: number) => Math.floor(clientX / sizeDotPlusGap)
     const calculateCoordY = (clientY: number) => Math.floor(clientY / sizeDotPlusGap)
