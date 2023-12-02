@@ -9,6 +9,7 @@ export const useDefaultsVariables = () => {
         BACKGROUND_COLOR = '--background',
         SECONDS_ON_ENTER = '--seconds-on-enter',
         SECONDS_ON_FADE = '--seconds-on-fade',
+        PAINT_ON_HOVER = 'paint-on-hover'
     }
 
     interface DefaultValues {
@@ -19,6 +20,7 @@ export const useDefaultsVariables = () => {
         [VariablesNames.BACKGROUND_COLOR]: string,
         [VariablesNames.SECONDS_ON_ENTER]: number,
         [VariablesNames.SECONDS_ON_FADE]: number,
+        [VariablesNames.PAINT_ON_HOVER]: boolean,
     }
 
     const defaultVariables: DefaultValues = {
@@ -28,7 +30,8 @@ export const useDefaultsVariables = () => {
         '--color-8': "#333333",
         '--background':"#0D0D0D",
         '--seconds-on-enter': 0,
-        '--seconds-on-fade': 10
+        '--seconds-on-fade': 10,
+        'paint-on-hover': true
     }
 
     return {

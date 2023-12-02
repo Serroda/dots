@@ -72,6 +72,13 @@ export const useVariableControl = defineStore("variables", () => {
         )
     );
 
+    const paintOnHover: Ref<boolean> = ref(
+        getFromLocalStorageOrDefault(
+            VariablesNames.PAINT_ON_HOVER,
+            DataType.Boolean
+        )
+    );
+
     const resetDefaults = () => {
         localStorage.clear();
         dotSize.value = getFromLocalStorageOrDefault(
@@ -102,16 +109,23 @@ export const useVariableControl = defineStore("variables", () => {
             VariablesNames.SECONDS_ON_FADE,
             DataType.Number
         );
+        paintOnHover.value = getFromLocalStorageOrDefault(
+            VariablesNames.PAINT_ON_HOVER,
+            DataType.Boolean
+        );
     };
 
     return {
-        dotSize,
-        gridGap,
-        dotColorActive,
-        dotColorInactive,
-        backgroundColor,
-        secondsOnEnter,
-        secondsOnFade,
-        resetDefaults,
+        variables: {
+            dotSize,
+            gridGap,
+            dotColorActive,
+            dotColorInactive,
+            backgroundColor,
+            secondsOnEnter,
+            secondsOnFade,
+            paintOnHover
+        },
+        resetDefaults
     };
 });

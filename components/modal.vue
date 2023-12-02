@@ -1,7 +1,9 @@
 <template>
     <Teleport to="body">
         <Transition name="slideBotTop">
-            <div class="modal" v-if="open"></div>
+            <div class="modal" v-if="open">
+                <slot name="content"></slot>
+            </div>
         </Transition>
     </Teleport>
 </template>
