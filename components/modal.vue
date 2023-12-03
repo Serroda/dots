@@ -18,18 +18,18 @@ withDefaults(defineProps<{ open: boolean }>(), { open: false });
     border: 1px solid #333333;
     position: absolute;
 
-    top: 20%;
+    top: 10%;
     left: 0;
     right: 0;
     margin: 0  auto;
 
-    max-width: 600px;
-    max-height: 60dvh;
+    max-width: 660px;
+    max-height: 80dvh;
     height: auto;
 
     z-index: 5;
 
-    overflow: scroll;
+    overflow-y: auto;
 }
 
 .slideBotTop-enter-active,
@@ -44,6 +44,6 @@ withDefaults(defineProps<{ open: boolean }>(), { open: false });
 
 .slideBotTop-enter-to,
 .slideBotTop-leave-from {
-    top: 20%
+    top: 10%
 }
 </style>

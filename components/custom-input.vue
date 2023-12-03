@@ -32,9 +32,9 @@ const value = computed({
 })
 
 function onlyNumbers(event: KeyboardEvent) {
-    const regExp = /[0-9]|Backspace/
+    const regExp = /[0-9]|Backspace|ArrowLeft|ArrowRight/
     const newValue = event.key;
-
+ 
     if (!regExp.test(newValue)) {
         event.preventDefault()
     }
@@ -99,7 +99,7 @@ function onlyNumbers(event: KeyboardEvent) {
 }
 
 .custom-input-number[type=number] {
-    -moz-appearance: textfield;
+    appearance: textfield;
 }
 .custom-input-color {
     width: 80%;

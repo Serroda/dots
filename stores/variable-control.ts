@@ -58,6 +58,13 @@ export const useVariableControl = defineStore("variables", () => {
         values[name] = value;
         updateVariableLocalStorage(name, value)
         setGlobalStyle(name, value.toString())
+        updateGrid(name)
+    }
+
+    function updateGrid(name: keyof typeof values){
+        if(name === Names.DOT_SIZE || name === Names.GRID_GAP){
+            document.dispatchEvent(new CustomEvent('updateGrid'))
+        }
     }
 
     let key: keyof typeof values;

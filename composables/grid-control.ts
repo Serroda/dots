@@ -6,21 +6,21 @@ interface TouchGrid {
 
 export const useGridControl = () => {
 
-    const {values,Names} = useVariableControl();
+    const { values, Names } = useVariableControl();
 
     let columns = 0
     let rows = 0
     const dots = ref(0)
     const touches: Ref<TouchGrid[]> = ref([])
-    const sizeDotPlusGap = (values[Names.DOT_SIZE] 
-        + values[Names.GRID_GAP] * 2)
+
+    let sizeDotPlusGap = 0
 
     const calculateCoordX = (clientX: number) => Math.floor(clientX / sizeDotPlusGap)
     const calculateCoordY = (clientY: number) => Math.floor(clientY / sizeDotPlusGap)
     const getIndexItem = (x: number, y: number) => (x < 0 || y < 0) ? -1 : x + (y * columns)
 
     function setTouches(eventTouch: TouchEvent) {
-        if(!values[Names.PAINT_ON_HOVER]) {
+        if (!values[Names.PAINT_ON_HOVER]) {
             return
         }
 
@@ -49,6 +49,7 @@ export const useGridControl = () => {
     const calculateDotsNumber = () => Math.floor(rows * columns)
 
     function calculateGrid() {
+        sizeDotPlusGap = (values[Names.DOT_SIZE] + values[Names.GRID_GAP] * 2)
         columns = calculateColumns()
         rows = calculateRows()
         dots.value = calculateDotsNumber()
@@ -57,6 +58,7 @@ export const useGridControl = () => {
     onMounted(() => {
         calculateGrid();
         window.onresize = calculateGrid;
+        document.addEventListener('updateGrid',  calculateGrid)
     })
 
     return {

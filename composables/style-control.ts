@@ -6,8 +6,6 @@ export const useStyleControl = () => {
     Names.DOT_SIZE, Names.GRID_GAP, Names.SECONDS_ON_ENTER, Names.SECONDS_ON_FADE]
 
     function setGlobalStyle(variable: keyof typeof defaultVariables, value: string) {
-
-
         if (!namesStyle.includes(variable)) {
             return
         }
