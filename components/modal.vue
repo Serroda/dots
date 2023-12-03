@@ -14,7 +14,7 @@ withDefaults(defineProps<{ open: boolean }>(), { open: false });
 
 <style scoped>
 .modal {
-    background: var(--background);
+    background: #0D0D0D;
     border: 1px solid #333333;
     position: absolute;
 
@@ -23,11 +23,13 @@ withDefaults(defineProps<{ open: boolean }>(), { open: false });
     right: 0;
     margin: 0  auto;
 
-    max-width: 400px;
+    max-width: 600px;
     max-height: 60dvh;
-    height: 100%;
+    height: auto;
 
     z-index: 5;
+
+    overflow: scroll;
 }
 
 .slideBotTop-enter-active,

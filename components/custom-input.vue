@@ -1,14 +1,18 @@
 <template>
-    <div class="flex items-center gap-24px mb-20px">
+    <div class="flex items-center gap-24px">
         <div v-if="mode === 'checkbox'" class="input-container checkbox" :class="{ 'checkbox-animation': value }"
-            @click="changeGlobalValue(!values[nameValue])">
+            @click="value = !value">
         </div>
-        <div v-if="mode === 'number'" class="input-container" :class="{ 'checkbox-animation': value }">
-            <input type="number" class="custom-input-number" :value="value"
-                @input="changeGlobalValue(($event.target as HTMLInputElement).value)">
+        <div v-if="mode === 'number'" class="input-container">
+            <input type="number" class="custom-input-number" v-model="value" @keydown="(event) => onlyNumbers(event)">
         </div>
+
+        <div v-if="mode === 'color'" class="input-container">
+            <input type="color" class="custom-input-color" v-model="value" >
+        </div>
+
         <label>{{ text }}
-            <input v-if="mode === 'checkbox'" :type="mode" @input="changeGlobalValue(!values[nameValue])" class="hidden">
+            <input v-if="mode === 'checkbox'" :type="mode" v-model="value" class="hidden">
         </label>
     </div>
 </template>
@@ -18,28 +22,24 @@ const { values, changeValue } = useVariableControl();
 
 const props = defineProps<{
     text: string,
-    mode: 'checkbox' | 'radio' | 'number',
+    mode: 'checkbox' | 'radio' | 'number' | 'color',
     nameValue: keyof typeof values
 }>()
 
-const value = computed(() => values[props.nameValue])
+const value = computed({
+    get: () => values[props.nameValue],
+    set: (val) => changeValue(props.nameValue, val)
+})
 
-function changeGlobalValue(newValue: number | string | boolean) {
+function onlyNumbers(event: KeyboardEvent) {
+    const regExp = /[0-9]|Backspace/
+    const newValue = event.key;
 
-    switch (props.mode) {
-        case 'number':
-            console.log(values[props.nameValue])
-            if (newValue != '') { changeValue(props.nameValue, newValue) }
-            else { changeValue(props.nameValue, values[props.nameValue]) }
-            break;
-
-        default:
-            changeValue(props.nameValue, newValue)
-            break;
+    if (!regExp.test(newValue)) {
+        event.preventDefault()
     }
-
-
 }
+
 </script>
 
 <style scoped>
@@ -50,6 +50,8 @@ function changeGlobalValue(newValue: number | string | boolean) {
     transition: border .2s;
     position: relative;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .input-container:hover {
@@ -89,6 +91,7 @@ function changeGlobalValue(newValue: number | string | boolean) {
     border: none;
 }
 
+
 .custom-input-number::-webkit-outer-spin-button,
 .custom-input-number::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -97,6 +100,13 @@ function changeGlobalValue(newValue: number | string | boolean) {
 
 .custom-input-number[type=number] {
     -moz-appearance: textfield;
+}
+.custom-input-color {
+    width: 80%;
+    height: 80%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 </style>
 

@@ -30,8 +30,17 @@ export const useStyleControl = () => {
         }
     }
 
+    function removeStyles(){
+
+        const root = document.querySelector(':root') as HTMLStyleElement;
+        if (!root) throw new Error("Root element no detected");
+
+        root.style.cssText= ''
+    }
+
     return {
-        setGlobalStyle
+        setGlobalStyle,
+        removeStyles
     }
 
 }

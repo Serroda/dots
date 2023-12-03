@@ -110,8 +110,13 @@ input:focus{
 
 .button-position{
   position: absolute;
-  bottom: -15px;
+  bottom: -50px;
   left: 0;
   right: 0;
   margin: 0 auto;
+  transition: bottom ease .2s;
+}
+
+.button-position:hover{
+  bottom: -15px;
 }

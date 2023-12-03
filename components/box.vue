@@ -22,8 +22,8 @@ withDefaults(defineProps<{
 
 <style scoped>
 .box {
-  outline: 2px solid var(--color-8);
-  background: var(--background);
+  outline: 2px solid #333333;
+  background: #0D0D0D;
   position: relative;
   width: auto;
   height: auto;
@@ -57,13 +57,14 @@ withDefaults(defineProps<{
   border-width: 6px;
 }
 
-.corner.p1{
+.corner.p1 {
   right: -3px;
   top: -3px;
   border-bottom: none;
   border-left: none;
 }
-.corner.p2{
+
+.corner.p2 {
   left: -3px;
   top: -3px;
   border-bottom: none;
@@ -77,11 +78,10 @@ withDefaults(defineProps<{
   border-right: none;
 }
 
-.corner.p4{
+.corner.p4 {
   right: -3px;
   bottom: -3px;
   border-top: transparent;
   border-left: transparent;
 }
-
 </style>

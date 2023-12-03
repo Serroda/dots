@@ -1,5 +1,5 @@
 const { defaultVariables, Names } = useDefaultsVariables();
-const { setGlobalStyle } = useStyleControl()
+const { setGlobalStyle, removeStyles } = useStyleControl()
 
 function getFromLocalStorageOrDefault<T>(
     name: keyof typeof defaultVariables
@@ -51,6 +51,7 @@ export const useVariableControl = defineStore("variables", () => {
         for (key in values) {
             values[key] = getFromLocalStorageOrDefault(key)
         }
+        removeStyles()
     };
 
     function changeValue<T extends keyof typeof values>(name: T, value: typeof values[T]) {
