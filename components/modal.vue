@@ -16,12 +16,14 @@ withDefaults(defineProps<{ open: boolean }>(), { open: false });
 .modal {
     background: var(--background);
     border: 1px solid #333333;
-    top: 20%;
-    left: calc(50% - 400px / 2);
-
     position: absolute;
- 
-    width: 400px;
+
+    top: 20%;
+    left: 0;
+    right: 0;
+    margin: 0  auto;
+
+    max-width: 400px;
     max-height: 60dvh;
     height: 100%;
 

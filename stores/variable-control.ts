@@ -53,12 +53,18 @@ export const useVariableControl = defineStore("variables", () => {
         }
     };
 
-    function changeValue<T extends keyof typeof values>(name : T, value : typeof values[T]){
+    function changeValue<T extends keyof typeof values>(name: T, value: typeof values[T]) {
         values[name] = value;
-        updateVariableLocalStorage(name,value)
+        updateVariableLocalStorage(name, value)
+        setGlobalStyle(name, value.toString())
     }
 
-  
+    let key: keyof typeof values;
+    for (key in values) {
+        setGlobalStyle(key, values[key].toString())
+    }
+
+
     return {
         values,
         resetDefaults,

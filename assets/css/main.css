@@ -75,6 +75,11 @@ label {
   font-family: SourceSansPro;
 }
 
+
+input:focus{
+  outline: none;
+}
+
 .dot-container{
   padding: var(--grid-gap);
 }
@@ -105,6 +110,8 @@ label {
 
 .button-position{
   position: absolute;
-  bottom: -5px;
-  left: calc( 50% - (123.844px / 2));
+  bottom: -15px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }

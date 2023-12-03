@@ -22,8 +22,9 @@
         @click="openMenu = !openMenu"
       >
         <template #content>
-          <div class="ml-40px mr-40px mt-20px mb-20px">
-            <label>MENU</label>
+          <div class="ml-40px mr-40px mt-15px mb-25px">
+            <label v-if="!openMenu">MENU</label>
+            <label v-else>CLOSE</label>
           </div>
         </template>
       </Box>
@@ -40,6 +41,12 @@
               text="Paint on hover"
               mode="checkbox"
               :nameValue= "Names.PAINT_ON_HOVER"
+            ></CustomInput>
+            <CustomInput
+             class="cursor-pointer"
+              text="Seconds before fade "
+              mode="number"
+              :nameValue= "Names.SECONDS_ON_FADE"
             ></CustomInput>
           </div>
         </div>
