@@ -28,13 +28,23 @@ const props = defineProps<{
 
 const value = computed({
     get: () => values[props.nameValue],
-    set: (val) => changeValue(props.nameValue, val)
+    set: (val) =>{
+        if(val === '' && props.mode === 'number') {
+            changeValue(props.nameValue, 1)
+        } else {
+            changeValue(props.nameValue, val)
+        }
+    } 
 })
 
 function onlyNumbers(event: KeyboardEvent) {
     const regExp = /[0-9]|Backspace|ArrowLeft|ArrowRight/
     const newValue = event.key;
  
+    if(newValue === 'Backspace' && value.value as number < 2){
+        event.preventDefault()
+    }
+
     if (!regExp.test(newValue)) {
         event.preventDefault()
     }

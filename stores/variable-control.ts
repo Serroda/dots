@@ -60,14 +60,13 @@ export const useVariableControl = defineStore("variables", () => {
         values[name] = value;
         updateVariableLocalStorage(name, value)
         setGlobalStyle(name, value.toString())
-        if(name === Names.DOT_SIZE || name === Names.GRID_GAP) updateGrid()
+        updateGrid()
     }
 
     let key: keyof typeof values;
     for (key in values) {
         setGlobalStyle(key, values[key].toString())
     }
-
 
     return {
         values,

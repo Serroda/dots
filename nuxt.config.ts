@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     "assets/css/main.css"
   ],
   imports:{
-    dirs:['./variables']
+    dirs:['./variables','./classes']
   },
   pwa: {
     registerType: "autoUpdate",

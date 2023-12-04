@@ -8,12 +8,12 @@ export const useGridControl = () => {
 
     const { values, Names } = useVariableControl();
 
+    let sizeDotPlusGap = 0
     let columns = 0
     let rows = 0
-    const dots = ref(0)
-    const touches: Ref<TouchGrid[]> = ref([])
 
-    let sizeDotPlusGap = 0
+    const dots: Ref<IDot[]> = ref([])
+    const touches: Ref<TouchGrid[]> = ref([])
 
     const calculateCoordX = (clientX: number) => Math.floor(clientX / sizeDotPlusGap)
     const calculateCoordY = (clientY: number) => Math.floor(clientY / sizeDotPlusGap)
@@ -44,28 +44,62 @@ export const useGridControl = () => {
         touches.value = []
     }
 
+    const calculateItemSize = () => (values[Names.DOT_SIZE] + values[Names.GRID_GAP] * 2)
     const calculateColumns = () => Math.floor(window.innerWidth / sizeDotPlusGap)
     const calculateRows = () => Math.floor(window.innerHeight / sizeDotPlusGap)
-    const calculateDotsNumber = () => Math.floor(rows * columns)
 
-    function calculateGrid() {
-        sizeDotPlusGap = (values[Names.DOT_SIZE] + values[Names.GRID_GAP] * 2)
-        columns = calculateColumns()
-        rows = calculateRows()
-        dots.value = calculateDotsNumber()
+    function setCanvasDimensions(canvas: HTMLCanvasElement) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
 
-    onMounted(() => {
-        calculateGrid();
-        window.onresize = calculateGrid;
-        document.addEventListener('updateGrid',  calculateGrid)
-    })
+    function createDots() {
+        dots.value = []
+        for (let row = 1; row <= rows; row++) {
+            const y = row * sizeDotPlusGap - values[Names.DOT_SIZE] / 2
+
+            for (let column = 1; column <= columns; column++) {
+                const x = column * sizeDotPlusGap - values[Names.DOT_SIZE] / 2
+                const dot = new Dot(x, y, values[Names.DOT_SIZE], values[Names.GRID_GAP], values[Names.DOT_COLOR_INACTIVE])
+                dots.value.push(dot)
+            }
+        }
+    }
+
+    function setDotsInCanvas(canvas: HTMLCanvasElement) {
+        const ctx = canvas.getContext('2d')
+
+        if (ctx === null) {
+            console.error('CTX no defined')
+            return
+        }
+
+        for (const dot of dots.value) {
+            ctx.fillStyle = dot.color;
+            ctx.beginPath();
+            ctx.arc(dot.x, dot.y, dot.size / 2, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+    }
+
+    function initCanvas(canvas: HTMLCanvasElement) {
+        sizeDotPlusGap = calculateItemSize()
+        columns = calculateColumns()
+        rows = calculateRows()
+
+        setCanvasDimensions(canvas)
+        createDots()
+        setDotsInCanvas(canvas)
+    }
+
 
     return {
         dots,
         touches,
         resetTouches,
-        setTouches
+        setTouches, 
+        initCanvas
     }
 
 }
