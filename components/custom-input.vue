@@ -41,10 +41,6 @@ function onlyNumbers(event: KeyboardEvent) {
     const regExp = /[0-9]|Backspace|ArrowLeft|ArrowRight/
     const newValue = event.key;
  
-    if(newValue === 'Backspace' && value.value as number < 2){
-        event.preventDefault()
-    }
-
     if (!regExp.test(newValue)) {
         event.preventDefault()
     }

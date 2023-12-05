@@ -18,10 +18,12 @@ function getFromLocalStorageOrDefault<T>(
     }
 }
 
+
+
 const updateVariableLocalStorage = <T extends keyof typeof defaultVariables>(name: T, value: typeof defaultVariables[T]) => localStorage.setItem(name, value.toString());
-const updateGrid = () => document.dispatchEvent(new CustomEvent('updateGrid'))
 
 export const useVariableControl = defineStore("variables", () => {
+
     const values: typeof defaultVariables = reactive({
         [Names.DOT_SIZE]: getFromLocalStorageOrDefault(Names.DOT_SIZE),
         [Names.GRID_GAP]: getFromLocalStorageOrDefault(Names.GRID_GAP),
@@ -47,31 +49,32 @@ export const useVariableControl = defineStore("variables", () => {
 
     const resetDefaults = () => {
         localStorage.clear();
-
         let key: keyof typeof values;
         for (key in values) {
             values[key] = getFromLocalStorageOrDefault(key)
         }
-        removeStyles()
-        updateGrid();
+        saveValues()
     };
 
     function changeValue<T extends keyof typeof values>(name: T, value: typeof values[T]) {
         values[name] = value;
-        updateVariableLocalStorage(name, value)
-        setGlobalStyle(name, value.toString())
-        updateGrid()
     }
 
-    let key: keyof typeof values;
-    for (key in values) {
-        setGlobalStyle(key, values[key].toString())
+    function saveValues() {
+        let key: keyof typeof values;
+        for (key in values) {
+            updateVariableLocalStorage(key, values[key])
+            setGlobalStyle(key, values[key].toString())
+        }
     }
+
+    saveValues()
 
     return {
         values,
         resetDefaults,
         changeValue,
+        saveValues,
         Names
     };
 });

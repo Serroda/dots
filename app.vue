@@ -1,6 +1,8 @@
 <template>
   <div class="h-100% w-100% relative">
-    <canvas ref="canvas"></canvas>
+    <canvas ref="canvas" @touchmove.prevent="setTouches" @touchend="resetTouches" 
+    @mousemove="setTouches"
+      @mouseleave="resetTouches"></canvas>
 
     <div class="flex justify-center button-position">
       <Box :corners="2" animation class="cursor-pointer" @click="openMenu = !openMenu">
@@ -12,6 +14,7 @@
         </template>
       </Box>
     </div>
+
     <modal :open="openMenu">
       <template #content>
         <div class="p-40px">
@@ -40,11 +43,19 @@
 
           </div>
 
-          <div class="flex mt-40px">
-            <Box :corners="4" animation class="cursor-pointer" @click="resetDefaults">
+          <div class="flex mt-40px gap-26px">
+
+            <Box :corners="4" animation class="cursor-pointer" @click="applyChanges">
               <template #content>
-                <div class="ml-40px mr-40px mt-20px mb-20px">
-                  <label>RESET OPTIONS</label>
+                <div class="ml-40px mr-40px mt-16px mb-16px">
+                  <label>APPLY</label>
+                </div>
+              </template>
+            </Box>
+            <Box :corners="4" animation class="cursor-pointer" @click="resetVariables">
+              <template #content>
+                <div class="ml-40px mr-40px mt-16px mb-16px">
+                  <label>RESET</label>
                 </div>
               </template>
             </Box>
@@ -61,22 +72,34 @@
 const openMenu = ref(false);
 const canvas: Ref<HTMLCanvasElement | null> = ref(null)
 
-const { Names, resetDefaults } = useVariableControl()
-const { initCanvas } = useGridControl();
+const { Names, resetDefaults, saveValues } = useVariableControl()
+const { customCanvas, setTouches, resetTouches, calculateItemSize, createDots } = useGridControl();
 
-onMounted(() => {
-  function start() {
-    if (!canvas.value) {
-      console.error('Canvas not defined')
-      return
-    }
-
-    initCanvas(canvas.value);
+function start() {
+  if (!canvas.value) {
+    console.error('Canvas not defined')
+    return
   }
 
+  customCanvas.value = new CustomCanvas(canvas.value, window.innerWidth, window.innerHeight, calculateItemSize(), window.devicePixelRatio)
+  createDots()
+}
+
+function applyChanges() {
+  saveValues()
+  start()
+  openMenu.value = false
+}
+
+function resetVariables() {
+  resetDefaults()
+  start()
+  openMenu.value = false
+}
+
+onMounted(() => {
   start()
   window.onresize = start;
-  document.addEventListener('updateGrid', start)
 })
 
 </script>

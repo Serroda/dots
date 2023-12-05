@@ -1,4 +1,4 @@
-export interface IDot{
+export interface IDot {
     x: number;
     y: number;
     size: number;
@@ -6,19 +6,18 @@ export interface IDot{
     color: string;
 }
 
-export class Dot implements IDot{
+export class Dot implements IDot {
     x: number;
     y: number;
     size: number;
     gap: number;
     color: string;
-    
-    constructor(x: number, y: number, size: number, gap: number, color: string) {
-       this.x = x
-       this.y = y; 
-       this.size = size; 
-       this.gap = gap; 
-       this.color = color; 
+    constructor( x: number, y: number, size: number, gap: number, color: string) {
+        this.x = x
+        this.y = y;
+        this.size = size;
+        this.gap = gap;
+        this.color = color;
     }
 }
 
