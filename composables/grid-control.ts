@@ -10,13 +10,11 @@ export const useGridControl = () => {
             return
         }
 
-        const color = values[Names.DOT_COLOR_ACTIVE];
-
         if (event instanceof MouseEvent) {
-            customCanvas.value?.searchAndPaint(event.clientX, event.clientY, color)
+            customCanvas.value?.searchAndPaint(event.clientX, event.clientY)
         } else {
             for (const touch of event.changedTouches) {
-                customCanvas.value?.searchAndPaint(touch.clientX, touch.clientY, color)
+                customCanvas.value?.searchAndPaint(touch.clientX, touch.clientY)
             }
         }
     }
@@ -40,7 +38,9 @@ export const useGridControl = () => {
                 const dot = new Dot(x, y,
                     values[Names.DOT_SIZE],
                     values[Names.GRID_GAP],
-                    values[Names.DOT_COLOR_INACTIVE])
+                    values[Names.DOT_COLOR_INACTIVE],
+                    values[Names.DOT_COLOR_ACTIVE],
+                    values[Names.SECONDS_ON_FADE])
 
                 customCanvas.value.addDot(dot)
             }

@@ -15,6 +15,8 @@ export interface ICanvas {
     clearSurface: Function;
 }
 
+const { hexToHsl } = useStyleControl();
+
 export class CustomCanvas implements ICanvas {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
@@ -47,7 +49,7 @@ export class CustomCanvas implements ICanvas {
 
     addDot(dot: IDot) {
         this.dots.push(dot)
-        this.paintDot(dot)
+        this.paintDot(dot, dot.colorInactive)
     }
 
     removeDot(dot: IDot) {
@@ -56,9 +58,8 @@ export class CustomCanvas implements ICanvas {
         this.clearDot(dot)
     }
 
-
-    paintDot(dot: IDot) {
-        this.ctx.fillStyle = dot.color;
+    paintDot(dot: IDot, color: string) {
+        this.ctx.fillStyle = color;
         this.ctx.beginPath();
         this.ctx.arc(dot.x, dot.y, dot.size / 2, 0, 2 * Math.PI);
         this.ctx.fill();
@@ -68,25 +69,40 @@ export class CustomCanvas implements ICanvas {
         this.ctx.clearRect(dot.x - this.itemSize / 2, dot.y - this.itemSize / 2, this.itemSize, this.itemSize)
     }
 
-    searchAndPaint(clientX: number, clientY: number, color?: string) {
-
+    searchAndPaint(clientX: number, clientY: number) {
         const dot = this.dots.find(dot =>
             dot.x - this.itemSize / 2 <= clientX &&
             clientX <= dot.x + this.itemSize / 2 &&
             dot.y - this.itemSize / 2 <= clientY &&
             clientY <= dot.y + this.itemSize / 2
         );
+       
+        this.dots.forEach(itemDot => itemDot.active = false)
 
         if (dot) {
-            this.clearDot(dot)
-            if (color) dot.color = color;
-            this.paintDot(dot)
-        }
+            dot.onMouseIn();
+        } 
+
+        this.updateSurface();
     }
 
     clearSurface() {
         this.ctx.clearRect(0, 0, this.width, this.height)
     }
 
+    updateSurface() {
+        for (const dot of this.dots) {
+            this.clearDot(dot)
+            if (dot.active) {
+                this.paintDot(dot, dot.colorActive)
+            } else if (dot.hovered) {
+                const { h, s } = hexToHsl(dot.colorActive)
+                this.paintDot(dot, 'HSL(' + h + ', ' + s + '%, 35%)')
+            } else {
+                this.paintDot(dot, dot.colorInactive)
+            }
+        }
+
+    }
 }
 

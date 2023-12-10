@@ -44,7 +44,6 @@
           </div>
 
           <div class="flex mt-40px gap-26px">
-
             <Box :corners="4" animation class="cursor-pointer" @click="applyChanges">
               <template #content>
                 <div class="ml-40px mr-40px mt-16px mb-16px">
