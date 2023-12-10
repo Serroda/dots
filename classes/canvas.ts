@@ -15,7 +15,6 @@ export interface ICanvas {
     clearSurface: Function;
 }
 
-const { hexToHsl } = useStyleControl();
 
 export class CustomCanvas implements ICanvas {
     canvas: HTMLCanvasElement;
@@ -76,12 +75,15 @@ export class CustomCanvas implements ICanvas {
             dot.y - this.itemSize / 2 <= clientY &&
             clientY <= dot.y + this.itemSize / 2
         );
-       
-        this.dots.forEach(itemDot => itemDot.active = false)
 
         if (dot) {
             dot.onMouseIn();
-        } 
+            this.dots.filter(dotItem => dotItem != dot && dotItem.active === true)
+                .forEach(dotItem => dotItem.onMouseOut())
+        } else {
+            this.dots.filter(dotItem => dotItem.active === true)
+                .forEach(dotItem => dotItem.onMouseOut())
+        }
 
         this.updateSurface();
     }
@@ -93,14 +95,18 @@ export class CustomCanvas implements ICanvas {
     updateSurface() {
         for (const dot of this.dots) {
             this.clearDot(dot)
+
+            let color = dot.colorInactive
+
             if (dot.active) {
-                this.paintDot(dot, dot.colorActive)
+                color = dot.colorActive
             } else if (dot.hovered) {
-                const { h, s } = hexToHsl(dot.colorActive)
-                this.paintDot(dot, 'HSL(' + h + ', ' + s + '%, 35%)')
-            } else {
-                this.paintDot(dot, dot.colorInactive)
+                color = dot.colorFade
+                dot.updateFadeColor()
             }
+
+            this.paintDot(dot, color)
+            
         }
 
     }
