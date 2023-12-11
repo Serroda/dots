@@ -20,8 +20,8 @@ export const useGridControl = () => {
     }
 
     function resetTouches() {
-        customCanvas.value?.clearSurface();
-        createDots()
+        customCanvas.value?.dots.forEach(dot => dot.active = false)
+        customCanvas.value?.updateSurface()
     }
 
     function createDots() {
@@ -39,8 +39,7 @@ export const useGridControl = () => {
                     values[Names.DOT_SIZE],
                     values[Names.GRID_GAP],
                     values[Names.DOT_COLOR_INACTIVE],
-                    values[Names.DOT_COLOR_ACTIVE],
-                    values[Names.SECONDS_ON_FADE])
+                    values[Names.DOT_COLOR_ACTIVE])
 
                 customCanvas.value.addDot(dot)
             }

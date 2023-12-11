@@ -1,4 +1,4 @@
-
+interface hslColor { h: number, s: number, l: number }
 
 export interface IDot {
     x: number;
@@ -8,50 +8,42 @@ export interface IDot {
     colorInactive: string;
     colorActive: string;
     colorFade: string;
-    colorH: number;
-    colorS: number
-    colorL: number
+    colorHslFade: hslColor;
     active: boolean;
     hovered: boolean;
-    fadeDelay: number;
     onMouseIn: Function;
     onMouseOut: Function;
     updateFadeColor: Function;
+    interval: NodeJS.Timeout | null
 }
-
-
 
 const { hexToHsl } = useStyleControl();
 
-function calculateNextHsl(colorNow: { h: number, s: number, l: number }, colorEnd: { h: number, s: number, l: number }) {
+function calculateNextHsl(colorNow: hslColor, colorEnd: hslColor) {
+    
     const result = {
         h: colorNow.h,
         s: colorNow.s,
         l: colorNow.l
     }
 
-    console.log({colorNow,colorEnd})
-
     if (colorNow.h > colorEnd.h) {
-        result.h = result.h - 1
+        result.h = (result.h - 1)
     } else if (colorNow.h < colorEnd.h) {
-        result.h = result.h + 1
+        result.h = (result.h + 1)
     }
 
     if (colorNow.s > colorEnd.s) {
-        result.s = result.s - 1
+        result.s = (result.s - 1)
     } else if (colorNow.s < colorEnd.s) {
-        result.s = result.s + 1
+        result.s = (result.s + 1)
     }
 
-
-    if (colorNow.l > colorEnd.l) {
-        result.l = result.l - 1
+     if (colorNow.l > colorEnd.l) {
+        result.l = (result.l - .1)
     } else if (colorNow.l < colorEnd.l) {
-        result.l = result.l + 1
-    }
-
-    console.log(colorNow, colorEnd)
+        result.l = (result.l  + .1)
+    } 
 
     return result
 }
@@ -64,28 +56,25 @@ export class Dot implements IDot {
     colorInactive: string;
     colorActive: string;
     colorFade: string = "";
-    colorH: number = 0;
-    colorS: number = 0;
-    colorL: number = 0;
+    colorHslFade : hslColor = {h: 0, s: 0, l: 0};
     active: boolean;
     hovered: boolean;
-    fadeDelay: number;
+    interval: NodeJS.Timeout | null = null;
 
-    constructor(x: number, y: number, size: number, gap: number, colorInactive: string, colorActive: string, fadeDelay: number) {
+    constructor(x: number, y: number, size: number, gap: number, colorInactive: string, colorActive: string) {
         this.x = x
         this.y = y;
         this.size = size;
         this.gap = gap;
         this.colorInactive = colorInactive;
         this.colorActive = colorActive;
-        this.fadeDelay = fadeDelay;
         this.active = false
         this.hovered = false
     }
 
     onMouseIn() {
         this.active = true;
-        this.hovered = true;
+        this.hovered = false;
     }
 
     onMouseOut() {
@@ -95,32 +84,32 @@ export class Dot implements IDot {
 
     updateFadeColor() {
         const hslColorInactive = hexToHsl(this.colorInactive)
-
-
+   
         if (this.colorFade) {
 
-            if (this.colorH === hslColorInactive.h &&
-                this.colorS === hslColorInactive.s &&
-                this.colorL === hslColorInactive.l) {
+            if (this.colorHslFade.h === hslColorInactive.h &&
+                this.colorHslFade.s === hslColorInactive.s &&
+                this.colorHslFade.l.toFixed(2) == hslColorInactive.l.toFixed(2)) {
+
                 this.hovered = false
+
+                if (this.interval) {
+                    clearInterval(this.interval)
+                    this.interval = null
+                }
+
                 return
             }
-
-
-            const { h, s, l } = calculateNextHsl({ h: this.colorH, s: this.colorS, l: this.colorL }, hslColorInactive)
-            this.colorH = h;
-            this.colorS = s;
-            this.colorL = l;
-
+        
+            const hslColorNext = calculateNextHsl(this.colorHslFade, hslColorInactive)
+            this.colorHslFade = hslColorNext
         } else {
             const hslColorActive = hexToHsl(this.colorActive)
-            const { h, s, l } = calculateNextHsl(hslColorActive, hslColorInactive)
-            this.colorH = h;
-            this.colorS = s;
-            this.colorL = l;
+            const hslColorNext = calculateNextHsl(hslColorActive, hslColorInactive)
+           this.colorHslFade = hslColorNext
         }
 
-        this.colorFade = 'HSL(' + this.colorH + ', ' + this.colorS + '%, ' + this.colorL + '%)'
+        this.colorFade = 'HSL(' + this.colorHslFade.h + ', ' + this.colorHslFade.s + '%, ' + this.colorHslFade.l + '%)'
     }
 }
 

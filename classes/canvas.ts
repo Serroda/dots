@@ -13,6 +13,7 @@ export interface ICanvas {
     removeDot: Function
     clearDot: Function
     clearSurface: Function;
+    updateSurface: Function;
 }
 
 
@@ -27,7 +28,6 @@ export class CustomCanvas implements ICanvas {
     dots: IDot[] = [];
 
     constructor(canvas: HTMLCanvasElement, width: number, height: number, itemSize: number, pixelRatio: number) {
-
         this.canvas = canvas;
         this.width = width;
         this.height = height;
@@ -68,6 +68,15 @@ export class CustomCanvas implements ICanvas {
         this.ctx.clearRect(dot.x - this.itemSize / 2, dot.y - this.itemSize / 2, this.itemSize, this.itemSize)
     }
 
+    setHoveredDot(dot: IDot) {
+        dot.onMouseOut()
+        dot.interval = setInterval(() => {
+            dot.updateFadeColor()
+            this.clearDot(dot)
+            this.paintDot(dot, dot.colorFade)
+        }, 1)
+    }
+
     searchAndPaint(clientX: number, clientY: number) {
         const dot = this.dots.find(dot =>
             dot.x - this.itemSize / 2 <= clientX &&
@@ -78,11 +87,14 @@ export class CustomCanvas implements ICanvas {
 
         if (dot) {
             dot.onMouseIn();
-            this.dots.filter(dotItem => dotItem != dot && dotItem.active === true)
-                .forEach(dotItem => dotItem.onMouseOut())
+            this.dots.filter(dotItem => (dotItem != dot)
+                && dotItem.active === true
+                && dotItem.interval === null)
+                .forEach(dotItem => this.setHoveredDot(dotItem))
         } else {
-            this.dots.filter(dotItem => dotItem.active === true)
-                .forEach(dotItem => dotItem.onMouseOut())
+            this.dots.filter(dotItem => dotItem.active === true
+                && dotItem.interval === null)
+                .forEach(dotItem => this.setHoveredDot(dotItem))
         }
 
         this.updateSurface();
@@ -93,22 +105,13 @@ export class CustomCanvas implements ICanvas {
     }
 
     updateSurface() {
-        for (const dot of this.dots) {
+        for (const dot of this.dots.filter(item => !item.hovered)) {
+
+            const color = dot.active ? dot.colorActive : dot.colorInactive
+
             this.clearDot(dot)
-
-            let color = dot.colorInactive
-
-            if (dot.active) {
-                color = dot.colorActive
-            } else if (dot.hovered) {
-                color = dot.colorFade
-                dot.updateFadeColor()
-            }
-
             this.paintDot(dot, color)
-            
         }
-
     }
 }
 

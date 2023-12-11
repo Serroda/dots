@@ -39,9 +39,6 @@ export const useVariableControl = defineStore("variables", () => {
         [Names.SECONDS_ON_ENTER]: getFromLocalStorageOrDefault(
             Names.SECONDS_ON_ENTER
         ),
-        [Names.SECONDS_ON_FADE]: getFromLocalStorageOrDefault(
-            Names.SECONDS_ON_FADE
-        ),
         [Names.PAINT_ON_HOVER]: getFromLocalStorageOrDefault(
             Names.PAINT_ON_HOVER
         ),

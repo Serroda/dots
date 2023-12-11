@@ -8,7 +8,6 @@ export const useDefaultsVariables = () => {
         DOT_COLOR_INACTIVE = 'color-inactive',
         BACKGROUND_COLOR = '--background',
         SECONDS_ON_ENTER = 'seconds-on-enter',
-        SECONDS_ON_FADE = 'seconds-on-fade',
         PAINT_ON_HOVER = 'paint-on-hover'
     }
 
@@ -19,7 +18,6 @@ export const useDefaultsVariables = () => {
         [Names.DOT_COLOR_INACTIVE]: string,
         [Names.BACKGROUND_COLOR]: string,
         [Names.SECONDS_ON_ENTER]: number,
-        [Names.SECONDS_ON_FADE]: number,
         [Names.PAINT_ON_HOVER]: boolean,
     }
 
@@ -30,7 +28,6 @@ export const useDefaultsVariables = () => {
         'color-inactive': "#333333",
         '--background':"#0D0D0D",
         'seconds-on-enter': 0,
-        'seconds-on-fade': 10,
         'paint-on-hover': true
     }
 

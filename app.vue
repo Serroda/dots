@@ -24,8 +24,6 @@
               <h3 class="mt-0">GENERAL</h3>
               <CustomInput class="cursor-pointer mb-20px" text="Paint on hover" mode="checkbox"
                 :nameValue="Names.PAINT_ON_HOVER"></CustomInput>
-              <CustomInput class="mb-20px" text="Seconds before fade " mode="number" :nameValue="Names.SECONDS_ON_FADE">
-              </CustomInput>
               <h3 class="mt-0 mb-0">EXPERIMENTAL</h3>
               <p class="mt-0 danger">This options can freeze your browser</p>
               <CustomInput class="mb-20px" text="Dot size " mode="number" :nameValue="Names.DOT_SIZE"></CustomInput>
